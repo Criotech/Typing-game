@@ -1,0 +1,12 @@
+.timerContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .timer {
+    color: #fff;
+    font-size: 18px;
+    background-color: #3B4D5C;
+    padding: 15px 20px;
+    border-radius: 5px;
+  }

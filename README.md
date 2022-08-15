@@ -1,29 +1,22 @@
-# Next.js + Jest
+# Typing practice app
 
-This example shows how to configure Jest to work with Next.js.
+A simple tool that helps practice your typing 
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript.
+# Features
 
-## How to Use
+- Generate random paragraph.
+- Copy and paste paragraph
+- Set a time duration for practice
+- Coundown feature
+- Give result of typing speed and accuracy
+# Technologies
 
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
+- Client: Next JS/typescript.
 
-In your terminal, run the following command:
+## Running
 
-```bash
-npx create-next-app --example with-jest with-jest-app
-```
+Clone this repo, and cd into it, Then:
 
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
+### `npm run dev`
 
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
-
-## Run Jest Tests
-
-```bash
-npm test
-```
+Spin up Client.

@@ -1,65 +1,59 @@
-import Head from 'next/head'
-import Image from 'next/image'
-
+import React, { FC, useState, useEffect } from 'react'
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import {
+    sentence
+} from 'txtgen'
+import GenerateParagraghInput from '@/components/GenerateParagraphInput';
+import DurationInput from '@/components/DurationInput';
 import styles from '@/pages/index.module.css'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Welcome: FC = () => {
+    const router = useRouter();
+    const [paragragh, setParagragh] = useState<string>("");
+    const [duration, setDuration] = useState<number>(0);
+    const [disableStartBtn, toggleEnableStartBtn] = useState<boolean>(true);
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    const generateParagraph = () => {
+        const paragragh = sentence();
+        setParagragh(paragragh);
+    }
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+    useEffect(() => {
+        if (paragragh !== "" && duration !== 0) {
+            toggleEnableStartBtn(false);
+        } else {
+            toggleEnableStartBtn(true);
+        }
+    }, [disableStartBtn, toggleEnableStartBtn, paragragh, duration])
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+    const startTest = () => {
+        router.push({pathname: '/test', query: { paragragh, duration }})
+    }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+    return (
+        <div>
+            <Head>
+                <title>Typing App</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            <main className={styles.container}>
+                <h2>Welcome to typing game...</h2>
 
-          <a href="https://vercel.com/new" className={styles.card}>
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+                <p>Paste paragragh you want to practice below.</p>
+                <GenerateParagraghInput paragragh={paragragh} setParagragh={setParagragh} />
+                <button onClick={generateParagraph}>Generate Random Paragraph</button>
+
+                <p style={{ marginTop: 30 }}>Select Duration of test</p>
+                <DurationInput setDuration={setDuration} />
+
+                <div className={styles.startBtnContainer}>
+                    <button onClick={startTest} disabled={disableStartBtn}>Start Test</button>
+                </div>
+            </main>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+    )
 }
+
+export default Welcome;
